@@ -9,19 +9,24 @@
 #include <asio.hpp>
 #include <asio/ts/buffer.hpp>
 #include <asio/ts/internet.hpp>
-
+#include <fstream>
 std::vector<char> vBuffer(20 * 1024);
 
 void GrabSomeData(asio::ip::tcp::socket& socket) {
+	
 	socket.async_read_some(asio::buffer(vBuffer.data(), vBuffer.size()),
 		[&](std::error_code ec, std::size_t length) {
 			if (!ec) {
-				std::cout << "\n\nRead " << length << " bytes\n\n";
+				std::ofstream file;
+				file.open("index" + std::to_string(1 + rand() % 1000) + ".html");
+				if (file.is_open()) {
+					std::cout << "\n\nRead " << length << " bytes\n\n";
 
-				for (int i = 0; i < length; i++) {
-					std::cout << vBuffer[i];
+					for (int i = 0; i < length; i++) {
+						std::cout << vBuffer[i];
+						file << vBuffer[i];
+					}
 				}
-				
 			}
 		}
 	);
@@ -42,7 +47,7 @@ int main() {
 	//Getting addres of somewhere we want to connect
 	std::cout << "enter help to get ip of website" << std::endl;
 	
-	
+	// std::cout << "index" + std::to_string(1 + rand() % 1000) + ".html" << std::endl;
 	while (true) {
 		std::cout << "enter ip of website or quit" << std::endl;
 	
@@ -80,6 +85,7 @@ int main() {
 		}
 		socket.close();
 		ip.clear();
+		
 	}
 	return 0;
 }
