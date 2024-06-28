@@ -24,8 +24,8 @@ Replace <ip> with the actual ip of the website you want to download from.
 If you encounter any issues or have questions, please open an issue in this repository.
 
 ## Authors and Acknowledgment
-- Kirill - Initial work
-- 
+- Kirill(duebchy) - Initial work
+ 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
