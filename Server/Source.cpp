@@ -18,7 +18,8 @@ void GrabSomeData(asio::ip::tcp::socket& socket) {
 		[&](std::error_code ec, std::size_t length) {
 			if (!ec) {
 				std::ofstream file;
-				file.open("index" + std::to_string(1 + rand() % 1000) + ".html");
+				std::string name = "index" + std::to_string(1 + rand() % 1000) + ".html";
+				file.open(name);
 				if (file.is_open()) {
 					std::cout << "\n\nRead " << length << " bytes\n\n";
 
@@ -27,6 +28,7 @@ void GrabSomeData(asio::ip::tcp::socket& socket) {
 						file << vBuffer[i];
 					}
 				}
+				std::cout << name << std::endl;
 			}
 		}
 	);
@@ -36,6 +38,7 @@ void GrabSomeData(asio::ip::tcp::socket& socket) {
 
 std::string ip = "0.000.000.0";
 int main() {
+	std::string filename;
 	setlocale(LC_ALL, "ru");
 	asio::error_code ec;
 
@@ -54,9 +57,12 @@ int main() {
 		std::cin >> ip;
 		if (ip == "help") {
 			std::cout << "open cmd and write command: ping example.com";
+			continue;
 		}
 		if (ip == "quit") {
+			abort();
 			break;
+			
 		}
 		asio::ip::tcp::endpoint endpoint(asio::ip::make_address(ip, ec), 80);
 		//create socket
@@ -83,6 +89,7 @@ int main() {
 			using namespace std::chrono_literals;
 			std::this_thread::sleep_for(2000ms);
 		}
+		
 		socket.close();
 		ip.clear();
 		
