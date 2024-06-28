@@ -9,7 +9,7 @@ The program uses Boost.Asio's asynchronous networking capabilities to send HTTP 
 ## Getting Started
 
 ### Prerequisites
-- A modern C++ compiler with C++11 support
+- A modern C++ compiler with C++14 support
 - Boost libraries installed (specifically Boost.Asio)
 
 ### Installation
